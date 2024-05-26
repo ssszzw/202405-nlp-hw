@@ -1,0 +1,42 @@
+{
+  "builder_name": "json",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "json",
+  "dataset_size": 312900228,
+  "description": "",
+  "download_checksums": {
+    "E:/01Study/ML/Code/2024-nlpHw/202405-nlp-local/./data/train.json": {
+      "num_bytes": 330734385,
+      "checksum": null
+    }
+  },
+  "download_size": 330734385,
+  "features": {
+    "output_sequence": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "input_sequence": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 643634613,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 312900228,
+      "num_examples": 286859,
+      "dataset_name": "json"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
