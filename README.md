@@ -3,6 +3,7 @@
 ### 缺什么库就安什么库，库太多。
 requirements.ext中列了一些
 
+pip install -r requirements.txt
 cd 02src
 
 ### 下面的三条命令对显存要求逐渐降低
