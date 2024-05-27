@@ -22,6 +22,9 @@ class ModelArguments:
         default=True,
         metadata={"help": "Whether to use gradient checkpointing to save memory during training."}
     )
+    use_flash_attention: bool = field(default=False, metadata={"help": "Whether to use flash attention or not."})
+    deepspeed_config_path: Optional[str] = field(default=None, metadata={"help": "Path to the DeepSpeed configuration file."})
+
 
 
 def start_train():
@@ -106,13 +109,15 @@ def start_train():
                                             quantization_config= quantization_config if all_args.use_quantization else None,
                                             low_cpu_mem_usage=True,
                                             torch_dtype=torch.float16 if all_args.torch_dtype=='fp16' else torch.bfloat16,
+                                            attn_implementation="flash_attention_2" if all_args.use_flash_attention else "eager",
                                             # device_map='auto'
                                             )
 
     lora_config=LoraConfig(task_type=TaskType.CAUSAL_LM,
-                        r=8,
-                        target_modules='all-linear',
-                        lora_alpha=8,)
+                       r=8,
+                       target_modules=['q_proj','k_proj','k_proj'],
+                       lora_alpha=8,
+                       bias='none')
     if all_args.use_quantization:
         model=prepare_model_for_kbit_training(model)
     peft_model=get_peft_model(model,
@@ -133,8 +138,9 @@ def start_train():
                         save_steps=30,
                         save_total_limit=10,
                         report_to='tensorboard',
-                        optim='paged_adamw_32bit',
-                        gradient_checkpointing=all_args.use_gradient_checkpointing)
+                        optim='adamw_torch',
+                        gradient_checkpointing=all_args.use_gradient_checkpointing,
+                        deepspeed=all_args.deepspeed_config_path)
 
     if args.gradient_checkpointing:
         peft_model.enable_input_require_grads()
