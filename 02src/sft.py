@@ -106,7 +106,7 @@ def start_train():
                                             quantization_config= quantization_config if all_args.use_quantization else None,
                                             low_cpu_mem_usage=True,
                                             torch_dtype=torch.float16 if all_args.torch_dtype=='fp16' else torch.bfloat16,
-                                            device_map='auto'
+                                            # device_map='auto'
                                             )
 
     lora_config=LoraConfig(task_type=TaskType.CAUSAL_LM,
