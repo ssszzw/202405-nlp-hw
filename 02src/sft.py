@@ -18,6 +18,10 @@ class ModelArguments:
         default=True,
         metadata={"help": "Whether to use quantization for model weights."},
     )
+    use_gradient_checkpointing: bool = field(
+        default=False,
+        metadata={"help": "Whether to use gradient checkpointing to save memory during training."}
+    )
 
 
 def start_train():
@@ -129,7 +133,7 @@ def start_train():
                         save_total_limit=10,
                         report_to='tensorboard',
                         optim='paged_adamw_32bit',
-                        gradient_checkpointing=True)
+                        gradient_checkpointing=all_args.use_gradient_checkpointing)
 
     if args.gradient_checkpointing:
         peft_model.enable_input_require_grads()
