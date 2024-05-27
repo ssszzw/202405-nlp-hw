@@ -19,7 +19,7 @@ class ModelArguments:
         metadata={"help": "Whether to use quantization for model weights."},
     )
     use_gradient_checkpointing: bool = field(
-        default=False,
+        default=True,
         metadata={"help": "Whether to use gradient checkpointing to save memory during training."}
     )
 
@@ -99,7 +99,7 @@ def start_train():
     tokenized_ds=processed_ds.map(tokenize_func,batched=False,num_proc=4,remove_columns=processed_ds.column_names)
 
     quantization_config=BitsAndBytesConfig(load_in_4bit=True,
-                                        bnb_4bit_compute_dtype=torch.float16,
+                                        bnb_4bit_compute_dtype=torch.float16 if all_args.torch_dtype=='fp16' else torch.bfloat16,
                                         bnb_4bit_quant_type='nf4',
                                         bnb_4bit_use_double_quant=True,)
     model=AutoModelForCausalLM.from_pretrained(all_args.model_name,
