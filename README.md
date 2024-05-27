@@ -1,6 +1,7 @@
 # 202405-nlp-hw
 
 ### 缺什么库就安什么库，库太多。
+requirements.ext中列了一些
 
 cd 02src
 
