@@ -3,7 +3,7 @@ from transformers import AutoModelForCausalLM,AutoConfig,AutoTokenizer,TrainingA
 from peft import LoraConfig,get_peft_model,TaskType,prepare_model_for_kbit_training,PeftType
 import torch
 from datasets import load_dataset,load_from_disk
-from transformers import Trainer,DataCollatorForSeq2Seq,HfArgumentParser,LlamaConfig
+from transformers import Trainer,DataCollatorForSeq2Seq,HfArgumentParser,LlamaConfig,LlamaModel
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -106,6 +106,7 @@ def start_train():
                                             quantization_config= quantization_config if all_args.use_quantization else None,
                                             low_cpu_mem_usage=True,
                                             torch_dtype=torch.float16 if all_args.torch_dtype=='fp16' else torch.bfloat16,
+                                            device_map='auto'
                                             )
 
     lora_config=LoraConfig(task_type=TaskType.CAUSAL_LM,

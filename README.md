@@ -18,7 +18,7 @@ python sft.py --model_name Qwen/Qwen1.5-1.8B --batch_size 32 --max_length 1024 -
 ### 多卡
 torchrun --nproc_per_node=8 sft.py --model_name Qwen/Qwen1.5-1.8B --batch_size 2 --max_length 1024 --num_train_epochs 3 --use_quantization --torch_dtype bf16 --use_gradient_checkpointing
 
-accelerate launch --num_processes 2 sft.py --model_name Qwen/Qwen1.5-1.8B --batch_size 2 --max_length 1024 --num_train_epochs 3 --use_quantization --torch_dtype bf16 --use_gradient_checkpointing
+accelerate launch --num_processes 8 sft.py --model_name Qwen/Qwen1.5-1.8B --batch_size 2 --max_length 1024 --num_train_epochs 3 --use_quantization --torch_dtype bf16 --use_gradient_checkpointing
 
 torchrun --nproc_per_node=8 sft.py --model_name Qwen/Qwen1.5-0.5B --batch_size 2 --max_length 1024 --num_train_epochs 3 --use_quantization --torch_dtype bf16 --use_gradient_checkpointing
 
