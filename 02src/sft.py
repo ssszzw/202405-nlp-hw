@@ -34,7 +34,7 @@ def start_train():
     # raw_dataset=load_dataset("allenai/tulu-v2-sft-mixture",)['train']
     tokenizer=AutoTokenizer.from_pretrained(all_args.model_name)
 
-    raw_dataset=load_from_disk('./data/unify-data/')
+    raw_dataset=load_from_disk('../01data/unify-data')
 
     def process_func(item):
         input_split=item['input_sequence'].split('\n\n###')
